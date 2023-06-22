@@ -32,22 +32,17 @@ public class EmailService {
 
     }
 
-    void resetOTP(OtpDTO otpDTO){
+    public void resetOTP(OtpDTO otpDTO){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("minhdev2002@gmail.com");
+        message.setTo(otpDTO.getEmail());
+        message.setSubject("Chessy OTP Re-generated Verify");
+        message.setText("Here is your Re-generated OTP" + " " +otpService.extractOTP(otpDTO.getOtp()));
 
+        javaMailSender.send(message);
+        System.out.println("Email re-sent to "+otpDTO.getEmail());
     }
 
-    void verifyOTP(OtpVerifyDTO otpVerifyDTO){
 
-    }
 
-    public void testing(){
-//        OtpDTO test = new OtpDTO("Sky","minhdev2002@gmail.com",false,otpService.generateOTP());
-//        otpRepository.createOTP(test);
-
-//        OtpVerifyDTO otpVerifyDTO = new OtpVerifyDTO("Sky","minhdev2002@gmail.com","287826 21-6-2023 11:13:29");
-//        String result = otpRepository.isOTPValid(otpVerifyDTO);
-//        System.out.println(result);
-
-//        otpRepository.setVerifiedUser("Sky");
-    }
 }

@@ -70,6 +70,18 @@ public class AuthenticateService {
     //Hàm này dùng để kiểm tra OTP người dùng gửi tới
     public RegisterResponse verifyOTP(OtpVerifyDTO otpVerifyDTO){
         String result = otpRepository.isOTPValid(otpVerifyDTO);
+        if(result.equals("Equals")){
+            otpRepository.setVerifiedUser(otpVerifyDTO.getUsername());
+        }
+        return new RegisterResponse(result);
+    }
+
+    public RegisterResponse regenerateOTP(OtpVerifyDTO otpVerifyDTO){
+        OtpDTO newOtpDTO = new OtpDTO(otpVerifyDTO.getUsername(), otpVerifyDTO.getEmail(), false, otpService.generateOTP());
+        String result = otpRepository.regenerateOTP(newOtpDTO);
+        if(result.equals("RegeneratedSuccess")){
+            emailService.resetOTP(newOtpDTO);
+        }
 
         return new RegisterResponse(result);
     }

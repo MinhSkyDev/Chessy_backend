@@ -20,6 +20,9 @@ public class TokenFilterConfig {
         // provide endpoints which needs to be restricted.
         // All Endpoints would be restricted if unspecified
         filter.addUrlPatterns("/api/v1/authenticate/restricted");
+        filter.addUrlPatterns("/api/v1/authenticate/verify");
+        filter.addUrlPatterns("/api/v1/authenticate/regenerate");
+        filter.addUrlPatterns("/api/v1/user");
         return filter;
     }
 }

@@ -6,6 +6,7 @@ import com.ChessyBackend.chessy_backend.Email.DTO.OtpDTO;
 import com.ChessyBackend.chessy_backend.Email.DTO.OtpVerifyDTO;
 import com.ChessyBackend.chessy_backend.Email.EmailService;
 import com.ChessyBackend.chessy_backend.Token.TokenModel;
+import com.ChessyBackend.chessy_backend.User.UserEmailDTO;
 import com.ChessyBackend.chessy_backend.User.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,11 +58,12 @@ public class AuthenticateController {
         return new ResponseEntity<RegisterResponse>(authenticateService.verifyOTP(otpVerifyDTO),HttpStatus.OK);
     }
 
-
-    @GetMapping("/testing")
-    public void test(){
-        emailService.sendEmailOTP(new OtpDTO("BAK","buianhkiet42@gmail.com",false,"NNDREALOTP"));
+    @PostMapping("/regenerate")
+    public ResponseEntity<RegisterResponse> regenerateOTP(@RequestBody UserEmailDTO userEmailDTO){
+        OtpVerifyDTO otpVerifyDTO = new OtpVerifyDTO(userEmailDTO.getUsername(), userEmailDTO.getEmail(), "NULL");
+        return new ResponseEntity<RegisterResponse>(authenticateService.regenerateOTP(otpVerifyDTO),HttpStatus.OK);
     }
+
     @GetMapping("/restricted")
     public String test2(){
         try{

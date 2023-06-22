@@ -39,7 +39,7 @@ public class OTPRepository {
         ApiFuture<WriteResult> future = docReg.update("otp",newOtpDTO.getOtp());
         try {
             WriteResult writeResult = future.get();
-            result = writeResult.toString();
+            result = "RegeneratedSuccess";
         }
         catch (Exception e){
             result = e.getMessage();
