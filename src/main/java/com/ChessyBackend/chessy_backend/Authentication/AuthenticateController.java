@@ -2,6 +2,9 @@ package com.ChessyBackend.chessy_backend.Authentication;
 
 
 import com.ChessyBackend.chessy_backend.Authentication.ResponseEntity.RegisterResponse;
+import com.ChessyBackend.chessy_backend.Email.DTO.OtpDTO;
+import com.ChessyBackend.chessy_backend.Email.DTO.OtpVerifyDTO;
+import com.ChessyBackend.chessy_backend.Email.EmailService;
 import com.ChessyBackend.chessy_backend.Token.TokenModel;
 import com.ChessyBackend.chessy_backend.User.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,11 @@ public class AuthenticateController {
 
     @Autowired
     AuthenticateService authenticateService;
+
+    @Autowired
+    EmailService emailService;
+
+
     @PostMapping("/login")
     public ResponseEntity<TokenModel> login(@RequestBody AuthenticateDTO authenticateDTO){
         try {
@@ -44,10 +52,15 @@ public class AuthenticateController {
 
     }
 
+    @PostMapping("/verify")
+    public ResponseEntity<RegisterResponse> verifyOTP(@RequestBody OtpVerifyDTO otpVerifyDTO){
+        return new ResponseEntity<RegisterResponse>(authenticateService.verifyOTP(otpVerifyDTO),HttpStatus.OK);
+    }
+
 
     @GetMapping("/testing")
-    public String test(){
-        return authenticateService.testing("Sky");
+    public void test(){
+        emailService.sendEmailOTP(new OtpDTO("BAK","buianhkiet42@gmail.com",false,"NNDREALOTP"));
     }
     @GetMapping("/restricted")
     public String test2(){

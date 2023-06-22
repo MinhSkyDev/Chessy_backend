@@ -5,10 +5,12 @@ import lombok.*;
 @Data
 @Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class OtpDTO {
     String username;
     String email;
+    Boolean isVerify;
     String otp;
+
 }

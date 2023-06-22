@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @Getter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class OtpVerifyDTO {
     String username;
     String email;

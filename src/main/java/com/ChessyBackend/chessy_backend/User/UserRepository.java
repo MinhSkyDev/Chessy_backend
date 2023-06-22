@@ -32,17 +32,6 @@ public class UserRepository {
 
     }
 
-    public void addUserToVerifyUsers(UserModel userModel, String otp){
-        Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docRef = db.collection("verify_users").document(userModel.getUsername());
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("username",userModel.getUsername());
-        data.put("isVerify",false);
-        data.put("otp",otp);
-        ApiFuture<WriteResult> result = docRef.set(data);
-    }
-
     //Update verify_users otp field
     //Constraint: Phải kểm tra xem username có nằm trong DB không?
     public String setUserNewOTP(String username, String new_otp){
@@ -60,49 +49,10 @@ public class UserRepository {
         return result;
     }
 
-    //Update verify_users isVerify field
-    //Constraint: Phải kểm tra xem username có nằm trong DB không?
-    public String setVerifiedUser(String username){
-        String result = "";
-        Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docReg = db.collection("verify_users").document(username);
-        ApiFuture<WriteResult> future = docReg.update("isVerify",true);
-        try {
-            WriteResult writeResult = future.get();
-            result = writeResult.toString();
-        }
-        catch (Exception e){
-            result = e.getMessage();
-        }
-        return result;
-    }
 
-    public String checkOTPUser(String username, String otp){
-        //Query user
-        String result = "";
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference usersRef = db.collection("verify_users");
-        Query query = usersRef.whereEqualTo("username", username);
-        ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
-        UserVerìyModel userVerìyModel = null;
-        try{
-        List<QueryDocumentSnapshot> match_users = querySnapshot.get().getDocuments();
-        userVerìyModel = match_users.get(0).toObject(UserVerìyModel.class);
 
-        if(otp.equals(userVerìyModel.getOtp())){
-            result = "Equals";
-        }
-        else{
-            result = "NotEquals";
-        }
-        }
-        catch (Exception e){
-            result = e.getMessage();
-        }
 
-        return result;
-    }
 
 
     public boolean checkUserIsInDB(String username) throws Exception{

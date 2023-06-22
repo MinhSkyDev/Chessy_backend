@@ -19,6 +19,9 @@ public class JwtAuthenticateFilter extends GenericFilterBean {
 
     @Autowired
     public TokenService tokenService;
+
+    @Autowired
+    public TokenRepository tokenRepository;
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -29,7 +32,10 @@ public class JwtAuthenticateFilter extends GenericFilterBean {
             return;
         }
         final String token = authHeader.substring(7);
-        if(tokenService.getUsernameFromToken(token).equals("Sky2")){
+        String username = tokenService.getUsernameFromToken(token);
+        TokenModel tokenModel = tokenRepository.getToken(username);
+
+        if(tokenModel.accessToken.equals(token) || tokenModel.refreshToken.equals(token)){
             response.setStatus(HttpServletResponse.SC_OK);
         }
         else{
