@@ -25,7 +25,7 @@ public class EmailService {
         message.setFrom("minhdev2002@gmail.com");
         message.setTo(otpDTO.getEmail());
         message.setSubject("Chessy OTP Verify");
-        message.setText("Here is your OTP" + " " +otpService.extractOTP(otpDTO.getOtp()));
+        message.setText("Here is your OTP:" + " " +otpService.extractOTP(otpDTO.getOtp()));
 
         javaMailSender.send(message);
         System.out.println("Email sent to "+otpDTO.getEmail());
@@ -37,7 +37,7 @@ public class EmailService {
         message.setFrom("minhdev2002@gmail.com");
         message.setTo(otpDTO.getEmail());
         message.setSubject("Chessy OTP Re-generated Verify");
-        message.setText("Here is your Re-generated OTP" + " " +otpService.extractOTP(otpDTO.getOtp()));
+        message.setText("Here is your Re-generated OTP:" + " " +otpService.extractOTP(otpDTO.getOtp()));
 
         javaMailSender.send(message);
         System.out.println("Email re-sent to "+otpDTO.getEmail());

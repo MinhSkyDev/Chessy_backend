@@ -1,4 +1,4 @@
-package com.ChessyBackend.chessy_backend.User;
+package com.ChessyBackend.chessy_backend.User.RequestDTO;
 
 import lombok.*;
 

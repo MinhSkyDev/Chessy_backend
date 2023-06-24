@@ -2,11 +2,10 @@ package com.ChessyBackend.chessy_backend.Authentication;
 
 
 import com.ChessyBackend.chessy_backend.Authentication.ResponseEntity.RegisterResponse;
-import com.ChessyBackend.chessy_backend.Email.DTO.OtpDTO;
 import com.ChessyBackend.chessy_backend.Email.DTO.OtpVerifyDTO;
 import com.ChessyBackend.chessy_backend.Email.EmailService;
 import com.ChessyBackend.chessy_backend.Token.TokenModel;
-import com.ChessyBackend.chessy_backend.User.UserEmailDTO;
+import com.ChessyBackend.chessy_backend.User.RequestDTO.UserEmailDTO;
 import com.ChessyBackend.chessy_backend.User.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

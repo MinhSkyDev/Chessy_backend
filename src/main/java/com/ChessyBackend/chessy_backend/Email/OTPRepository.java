@@ -99,5 +99,20 @@ public class OTPRepository {
         return result;
     }
 
+    public String unverifyUser(String username){
+        String result = "";
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("verify_users").document(username);
+        ApiFuture<WriteResult> future = docReg.update("isVerify",false);
+        try {
+            WriteResult writeResult = future.get();
+            result = writeResult.toString();
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+        return result;
+    }
+
 
 }

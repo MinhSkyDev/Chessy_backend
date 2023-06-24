@@ -50,11 +50,6 @@ public class UserRepository {
     }
 
 
-
-
-
-
-
     public boolean checkUserIsInDB(String username) throws Exception{
 
         boolean result = false;
@@ -88,6 +83,107 @@ public class UserRepository {
         }
 
         return result;
+    }
 
+
+    public UserModel findUserByUsername(String username){
+        UserModel userModel = null;
+
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("users").document(username);
+        ApiFuture<DocumentSnapshot> future = docReg.get();
+
+        try{
+            userModel = future.get().toObject(UserModel.class);
+            userModel.setPassword("NULL");
+        }
+        catch (Exception e){
+            userModel = null;
+        }
+
+        return userModel;
+    }
+
+    public String updateUser(UserModel userModel){
+        String result = "";
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("users").document(userModel.getUsername());
+
+        ApiFuture<WriteResult> future_email = docReg.update("email",userModel.getEmail());
+        ApiFuture<WriteResult> future_name = docReg.update("email",userModel.getName());
+        ApiFuture<WriteResult> future_avatar = docReg.update("email",userModel.getAvatarURL());
+        try{
+            WriteResult writeResult_email = future_email.get();
+            WriteResult writeResult_name = future_name.get();
+            WriteResult writeResult_avatar = future_avatar.get();
+            result = writeResult_email.toString() + writeResult_avatar.toString() +
+                    writeResult_name.toString();
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+        return result;
+    }
+
+    public String updateUserEmail(String username, String newEmail){
+        String result = "";
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("users").document(username);
+        ApiFuture<WriteResult> future = docReg.update("email",newEmail);
+        try{
+            WriteResult writeResult = future.get();
+            result = writeResult.toString();
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+        return result;
+    }
+
+    public String updateUserName(String username, String newName){
+        String result = "";
+
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("users").document(username);
+        ApiFuture<WriteResult> future = docReg.update("name", newName);
+        try{
+            WriteResult writeResult = future.get();
+            result = writeResult.toString();
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+        return result;
+    }
+
+    public String updateUserAvatar(String username, String newAvatar){
+        String result = "";
+
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("users").document(username);
+        ApiFuture<WriteResult> future = docReg.update("avatarURL", newAvatar);
+        try{
+            WriteResult writeResult = future.get();
+            result = writeResult.toString();
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+        return result;
+    }
+
+    public String changeUserpassword(String username, String newPassword){
+        String result = "";
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docReg = db.collection("users").document(username);
+        ApiFuture<WriteResult> future = docReg.update("password", newPassword);
+        try{
+            WriteResult writeResult = future.get();
+            result = writeResult.toString();
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+        return result;
     }
 }
