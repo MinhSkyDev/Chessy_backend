@@ -22,7 +22,7 @@ public class ChessyBackendApplication {
 			File file = new File(Objects.requireNonNull(classLoader.getResource("serviceAccountKey.json")).getFile());
 
 			FileInputStream serviceAccount =
-					new FileInputStream(file.getAbsolutePath());
+					new FileInputStream(file.get);
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 					.build();
