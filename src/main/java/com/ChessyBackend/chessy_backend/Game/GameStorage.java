@@ -3,6 +3,8 @@ package com.ChessyBackend.chessy_backend.Game;
 import com.ChessyBackend.chessy_backend.Game.DTO.GameHistory;
 import com.ChessyBackend.chessy_backend.Game.DTO.GameModel;
 import com.ChessyBackend.chessy_backend.Game.DTO.GameStatusDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +13,13 @@ import java.util.Map;
 
 
 //Lớp này sử dụng Singleton DesignPattern
+
 public class GameStorage {
     private static Map<String, GameModel> currentGames;
     private static Map<String, GameHistory> history;
     private static GameStorage instance;
+
+
 
     private GameStorage(){
         currentGames = new HashMap<>();
@@ -39,11 +44,12 @@ public class GameStorage {
 
     public void registerNewGame(GameModel gameModel){
         currentGames.put(gameModel.getGameId(), gameModel);
-        GameHistory newHistory = new GameHistory(new ArrayList<GameStatusDTO>());
-        history.put(gameModel.getGameId(), newHistory);
+//        GameHistory newHistory = new GameHistory(new ArrayList<GameStatusDTO>());
+//        history.put(gameModel.getGameId(), newHistory);
     }
 
     public void finishGame(String gameID){
+        currentGames.remove(gameID);
         currentGames.remove(gameID);
     }
 

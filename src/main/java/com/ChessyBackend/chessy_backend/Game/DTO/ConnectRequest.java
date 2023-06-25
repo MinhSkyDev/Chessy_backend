@@ -12,4 +12,7 @@ import lombok.Setter;
 public class ConnectRequest {
     String player;
     String gameId;
+    String roomName;
+    String secsPerMoves;
+    String timeAllowStop;
 }

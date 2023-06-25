@@ -32,17 +32,24 @@ public class JwtAuthenticateFilter extends GenericFilterBean {
             return;
         }
         final String token = authHeader.substring(7);
-        String username = tokenService.getUsernameFromToken(token);
-        TokenModel tokenModel = tokenRepository.getToken(username);
+        try{
+            //Exception may occur in this line, when the Token is expired
+            String username = tokenService.getUsernameFromToken(token);
+            TokenModel tokenModel = tokenRepository.getToken(username);
 
-        if(tokenModel.accessToken.equals(token) || tokenModel.refreshToken.equals(token)){
-            response.setStatus(HttpServletResponse.SC_OK);
+            if(tokenModel.accessToken.equals(token) || tokenModel.refreshToken.equals(token)){
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
+            else{
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"The token is not valid");
+                return;
+            }
+            filterChain.doFilter(servletRequest,servletResponse);
         }
-        else{
+        catch(Exception e){
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"The token is not valid");
             return;
         }
-        filterChain.doFilter(servletRequest,servletResponse);
         return;
     }
 }

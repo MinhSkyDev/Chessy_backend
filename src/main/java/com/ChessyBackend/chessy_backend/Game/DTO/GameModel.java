@@ -13,4 +13,7 @@ public class GameModel {
     String player1;
     String player2;
     String status;
+    String roomName;
+    String secsPerMoves;
+    String timeAllowStop;
 }
