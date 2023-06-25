@@ -26,7 +26,7 @@ public class UserRepository {
         data.put("username", userModel.getUsername());
         data.put("password", userModel.getPassword());
         data.put("email", userModel.getEmail());
-        data.put("name",userModel.getEmail());
+        data.put("name",userModel.getName());
         data.put("avatarURL",userModel.getAvatarURL());
         ApiFuture<WriteResult> result = docRef.set(data);
 

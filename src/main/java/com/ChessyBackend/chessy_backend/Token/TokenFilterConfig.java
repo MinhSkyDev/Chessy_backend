@@ -23,6 +23,7 @@ public class TokenFilterConfig {
         filter.addUrlPatterns("/api/v1/authenticate/verify");
         filter.addUrlPatterns("/api/v1/authenticate/regenerate");
         filter.addUrlPatterns("/api/v1/user");
+        filter.addUrlPatterns("/api/v1/user/*");
         return filter;
     }
 }

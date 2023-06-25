@@ -21,12 +21,12 @@ public class UserService {
     EmailService emailService;
 
     public UserModel getUser(String username){
-        return null;
+        return userRepository.findUserByUsername(username);
     }
 
     public String updateUser(UserModel userModel){
         String result = "";
-
+        result = userRepository.updateUser(userModel);
         return result;
     }
     public String updateUser(UserModel userModel,String attribute){
