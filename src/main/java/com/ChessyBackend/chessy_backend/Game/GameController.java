@@ -2,6 +2,7 @@ package com.ChessyBackend.chessy_backend.Game;
 
 
 import com.ChessyBackend.chessy_backend.Game.DTO.ConnectRequest;
+import com.ChessyBackend.chessy_backend.Game.DTO.GameHistory;
 import com.ChessyBackend.chessy_backend.Game.DTO.GameModel;
 import com.ChessyBackend.chessy_backend.Game.DTO.GameStatusDTO;
 import org.checkerframework.checker.units.qual.C;
@@ -70,8 +71,14 @@ public class GameController {
 
     @PostMapping("/gameplay")
     public ResponseEntity gameplay(@RequestBody GameStatusDTO gameStatusDTO){
+        System.out.println(gameStatusDTO);
         gameService.handleGame(gameStatusDTO);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/history/{username}")
+    public ArrayList<GameHistory> getHistory(@PathVariable String username){
+        return gameService.getHistory(username);
     }
 
 

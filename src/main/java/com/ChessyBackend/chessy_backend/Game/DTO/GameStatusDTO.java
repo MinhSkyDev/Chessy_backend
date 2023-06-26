@@ -5,15 +5,14 @@ import lombok.*;
 @Data
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class GameStatusDTO {
     String gameID;
     String player1;
     String player2;
-    String FEN;
+    String fen;
     String moves;
     String currentSide;
-
     String message;
 }

@@ -167,7 +167,8 @@ public class GameService {
 
                 //Set các thông số cho history
                 if(history == null){
-                    history = new GameHistory(new ArrayList<GameStatusDTO>());
+                    history = new GameHistory();
+                    history.setHistory(new ArrayList<GameStatusDTO>());
                 }
                 history.setGameID(gameStatusDTO.getGameID());
                 history.setPlayer1(gameStatusDTO.getPlayer1());
@@ -185,5 +186,10 @@ public class GameService {
         currentGames.removeIf(game -> !game.getStatus().equals("OPEN"));
 
         return currentGames;
+    }
+
+    public ArrayList<GameHistory> getHistory(String username) {
+        ArrayList<GameHistory> history = gameRepository.getHistory(username);
+        return history;
     }
 }

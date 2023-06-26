@@ -16,6 +16,5 @@ public class GameHistory {
     String gameID;
     String player1;
     String player2;
-    @NonNull
     ArrayList<GameStatusDTO> history;
 }
