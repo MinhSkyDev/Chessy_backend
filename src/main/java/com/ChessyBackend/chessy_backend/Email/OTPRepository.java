@@ -114,5 +114,28 @@ public class OTPRepository {
         return result;
     }
 
+    public String checkVerify(String username){
+        String result = "";
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection("verify_users").document(username);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+
+        OtpDTO userVerifyModel = null;
+        try{
+            userVerifyModel = future.get().toObject(OtpDTO.class);
+            if(userVerifyModel.getIsVerify() == Boolean.FALSE){
+                result = "UNVERIFIED";
+            }
+            else{
+                result = "VERIFIED";
+            }
+        }
+        catch (Exception e){
+            result = e.getMessage();
+        }
+
+        return result;
+    }
+
 
 }

@@ -63,6 +63,12 @@ public class AuthenticateController {
         return new ResponseEntity<RegisterResponse>(authenticateService.regenerateOTP(otpVerifyDTO),HttpStatus.OK);
     }
 
+    @PostMapping("/isVerify")
+    public ResponseEntity<RegisterResponse> checkUsernameVerify(@RequestBody AuthenticateDTO authenticateDTO){
+        return new ResponseEntity<RegisterResponse>(
+                authenticateService.checkIsUserVerify(authenticateDTO.getUsername()), HttpStatus.OK);
+    }
+
     @GetMapping("/restricted")
     public String test2(){
         try{

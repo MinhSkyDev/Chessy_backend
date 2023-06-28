@@ -76,6 +76,12 @@ public class AuthenticateService {
         return new RegisterResponse(result);
     }
 
+    public RegisterResponse checkIsUserVerify(String username){
+        String result = "";
+        result = otpRepository.checkVerify(username);
+        return new RegisterResponse(result);
+    }
+
     public RegisterResponse regenerateOTP(OtpVerifyDTO otpVerifyDTO){
         OtpDTO newOtpDTO = new OtpDTO(otpVerifyDTO.getUsername(), otpVerifyDTO.getEmail(), false, otpService.generateOTP());
         String result = otpRepository.regenerateOTP(newOtpDTO);
